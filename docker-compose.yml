@@ -7,9 +7,9 @@ services:
     container_name: db
     image: 'postgres:16-alpine'
     environment:
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=pa55word
-      - POSTGRES_DB=postgres
     ports:
       - "5432:5432"
     volumes:
@@ -17,20 +17,20 @@ services:
 
   backend:
     build: ./backend
-    container_name: test-backend
+    container_name: backend
     ports:
       - "8080:8080"
     environment:
       - DB_SERVER=db
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=pa55word
-      - POSTGRES_DB=postgres
     links:
       - db
-#
+
 #  frontend:
 #    build: ./frontend
-#    container_name: test-frontend
+#    container_name: frontend
 #    ports:
 #      - "4200:4200"
 #    links:
