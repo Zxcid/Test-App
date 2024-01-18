@@ -1,1 +1,14 @@
-<p>home works!</p>
+<div class="h-100 d-flex flex-column align-items-center justify-content-center">
+  <h1 class="m-2">Welcome to the Test-App!</h1>
+
+  <h4>Please, select the store you work for:</h4>
+
+  <mat-form-field appearance="fill">
+    <mat-label>select your store...</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let store of stores" [value]="store.name">
+        {{store.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

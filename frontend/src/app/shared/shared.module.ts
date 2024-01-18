@@ -2,12 +2,14 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MaterialModule} from "./modules/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 export const SHARED_MODULES = [
   CommonModule,
   MaterialModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  HttpClientModule
 ];
 
 export const SHARED_COMPONENTS = [

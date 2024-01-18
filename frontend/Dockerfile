@@ -7,7 +7,7 @@ RUN npm install
 ENV PATH="./node_modules/.bin:$PATH"
 
 COPY . ./
-RUN npm run build
+RUN npm run build-dev
 
 FROM nginx:1.25-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
