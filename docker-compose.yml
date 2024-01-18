@@ -28,10 +28,10 @@ services:
     links:
       - db
 
-#  frontend:
-#    build: ./frontend
-#    container_name: frontend
-#    ports:
-#      - "4200:4200"
-#    links:
-#      - backend
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "4200:80"
+    links:
+      - backend
