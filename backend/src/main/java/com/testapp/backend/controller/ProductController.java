@@ -37,4 +37,12 @@ public class ProductController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+
+    @GetMapping("/product/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable Integer id) {
+        if (id != null)
+            return productService.getByProductId(id);
+        else
+            return ResponseEntity.badRequest().body("Given id is null. Please insert a valid id.");
+    }
 }
