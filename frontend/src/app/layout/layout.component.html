@@ -1,3 +1,7 @@
 <div class="h-100">
-  <app-home></app-home>
+  <div class="w-100 fixed-top">
+    <app-header [store]="storeSelected"></app-header>
+  </div>
+
+  <app-home (selectedStore)="selectStore($event)"></app-home>
 </div>

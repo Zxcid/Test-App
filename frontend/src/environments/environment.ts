@@ -3,10 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  appName: 'Ge-Store',
   production: false,
   api: {
-    allStores: 'http://localhost:8080/stores/',
-    store: 'http://localhost:8080/stores/{id}/'
+    allStores: 'http://localhost:8080/stores',
+    store: 'http://localhost:8080/stores/{id}'
   }
 };
 

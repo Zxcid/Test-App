@@ -11,3 +11,8 @@ export interface IStore {
   [EStore.id]: number,
   [EStore.products]?: IProduct[]
 }
+
+export const _defaultStore: IStore = {
+  [EStore.name]: 'Ge-Store',
+  [EStore.id]: 999
+}

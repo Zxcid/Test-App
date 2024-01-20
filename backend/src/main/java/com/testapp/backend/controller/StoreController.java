@@ -15,8 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/stores")
-@CrossOrigin(origins = "http://localhost:4200/*")
+@RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:4200")
 public class StoreController {
 
     private final StoreService storeService;
@@ -35,7 +35,7 @@ public class StoreController {
             @ApiResponse(responseCode = "404", description = "Store not found",
                     content = @Content)
     })
-    @GetMapping("/{storeId}")
+    @GetMapping("/stores/{storeId}")
     public ResponseEntity<?> getStore(@PathVariable Integer storeId) {
         try {
             return ResponseEntity.ok().body(storeService.getStoreById(storeId));
@@ -44,7 +44,7 @@ public class StoreController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping("/stores")
     public ResponseEntity<?> getStores() {
         return storeService.getAllStores();
     }

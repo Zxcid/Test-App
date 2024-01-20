@@ -1,14 +1,19 @@
 <div class="h-100 d-flex flex-column align-items-center justify-content-center">
-  <h1 class="m-2">Welcome to the Test-App!</h1>
+
+  <h1 style="margin-bottom: 200px;">Welcome to Ge-Store!</h1>
 
   <h4>Please, select the store you work for:</h4>
 
   <mat-form-field appearance="fill">
     <mat-label>select your store...</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let store of stores" [value]="store.name">
+    <mat-select [(value)]="myStore">
+      <mat-option *ngFor="let store of stores" [value]="store">
         {{store.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <button mat-raised-button color="accent"
+          [disabled]="!myStore"
+          (click)="navigateToStore()">Enter</button>
 </div>

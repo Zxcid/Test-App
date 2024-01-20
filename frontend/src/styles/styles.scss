@@ -1,8 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@include mat.core();
+
 @import "reset.scss";
+
+$my-primary: mat.define-palette(mat.$deep-purple-palette);
+$my-accent: mat.define-palette(mat.$amber-palette);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// region - Angular Material Classes
+
+/*
+ * You can use the get-color-from-palette function to get specific hues from a palette by their number identifier.
+ * You can also access the contrast color for a particular hue by suffixing the hue's number identifier with -contrast.
+ *  ex. mat.get-color-from-palette($my-primary, '500-contrast');
+ * You can also reference colors using the "default", "lighter", "darker", and "text" colors passed to define-palette.
+ */
+
+/* Color options */
+.color {
+  &-primary {
+    color: mat.get-color-from-palette($my-primary, 'text');
+  }
+  &-accent {
+    color: mat.get-color-from-palette($my-accent, 'text');
+  }
+}
+
+/* Background options */
+.bg {
+  &-primary {
+    background-color: mat.get-color-from-palette($my-primary, 'default');
+  }
+  &-accent {
+    background-color: mat.get-color-from-palette($my-accent, 'default');
+  }
+}
+// endregion
 
 // region - Collection of global classes
 
