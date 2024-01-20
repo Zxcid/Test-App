@@ -39,7 +39,7 @@ export class UtilsService {
    * @return msg message replaced
    */
   static replacePlaceholder(msg: string, placeholder: string | RegExp, value: string): string {
-    return msg.replaceAll(placeholder, value);
+    return msg.replace(placeholder, value);
   }
 
   /**

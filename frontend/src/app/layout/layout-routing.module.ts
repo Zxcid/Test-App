@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: ESections.home,
         component: HomeComponent
+      },
+      {
+        path: ESections.products,
+        loadChildren: () => import('../products/products.module').then(m => m.ProductsModule)
       }
     ]
   },

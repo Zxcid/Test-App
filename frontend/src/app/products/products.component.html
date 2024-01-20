@@ -1,0 +1,5 @@
+<div class="h-100 w-100 d-flex flex-column align-content-space-between pt-5">
+  <ng-container *ngFor="let product of products" class="overflow-auto">
+    <app-product [product]="product"></app-product>
+  </ng-container>
+</div>

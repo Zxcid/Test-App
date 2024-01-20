@@ -3,7 +3,8 @@ import {AppRoutingConstant} from "../classes/app-routing.constants";
 export enum ESections {
   other = '**',
   layout = '',
-  home = 'home'
+  home = 'home',
+  products = 'products'
 }
 
 export interface IAppSections {
@@ -24,6 +25,11 @@ export const __appSections: IAppSections[] = [
     key: ESections.home,
     route: AppRoutingConstant.fullPath([ESections.home]),
     title: 'Home'
+  },
+  {
+    key: ESections.products,
+    route: AppRoutingConstant.fullPath([ESections.products]),
+    title: 'Products'
   }
 ];
 

@@ -9,10 +9,11 @@ export enum EStore {
 export interface IStore {
   [EStore.name]: string,
   [EStore.id]: number,
-  [EStore.products]?: IProduct[]
+  [EStore.products]: IProduct[]
 }
 
 export const _defaultStore: IStore = {
   [EStore.name]: 'Ge-Store',
-  [EStore.id]: 999
+  [EStore.id]: 999,
+  [EStore.products]: []
 }

@@ -1,7 +1,9 @@
 <div class="h-100">
-  <div class="w-100 fixed-top">
+  <div class="w-100 fixed-top" style="z-index: 9999">
     <app-header [store]="storeSelected"></app-header>
   </div>
 
-  <app-home (selectedStore)="selectStore($event)"></app-home>
+  <div class="h-100">
+    <router-outlet></router-outlet>
+  </div>
 </div>
