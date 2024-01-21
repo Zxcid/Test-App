@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from "./modules/material/material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {MultipleInputComponent} from './components/multiple-input/multiple-input.component';
 
 export const SHARED_MODULES = [
   CommonModule,
@@ -13,6 +14,7 @@ export const SHARED_MODULES = [
 ];
 
 export const SHARED_COMPONENTS = [
+  MultipleInputComponent
 ];
 
 @NgModule({

@@ -1,5 +1,18 @@
-<div class="h-100 w-100 d-flex flex-column align-content-space-between pt-5">
+<div style="padding-top: 60px;" class="h-100 w-100 d-flex flex-column align-content-space-between">
+
+  <div>
+    <mat-toolbar class="justify-content-between">
+      <button mat-icon-button color="primary" (click)="addNewProduct()">
+        <mat-icon>add</mat-icon>
+        <span>Add product</span>
+      </button>
+      <button mat-icon-button (click)="toggleFilterMenu()">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+
   <ng-container *ngFor="let product of products" class="overflow-auto">
-    <app-product [product]="product"></app-product>
+    <app-product [product]="product" (deletedProduct)="deleteProduct($event)"></app-product>
   </ng-container>
 </div>

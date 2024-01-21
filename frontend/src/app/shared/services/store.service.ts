@@ -6,6 +6,10 @@ import {environment} from "../../../environments/environment";
 import {AppService} from "./app.service";
 import {IProduct} from "../constants/product.constants";
 
+/**
+ * Classe che implementa due flussi, uno locale per salvare i dati come subjects, uno con chiamate http per salvare a db
+ * i dati comunicando con il be. Entrambi i flussi sono mantenuti a solo scopo dimostrativo.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +30,14 @@ export class StoreService {
       );
   }
 
-  public setStore(store: IStore) {
+  public postProduct(product: IProduct) {
+    return this.http.post(environment.api.saveProduct, product, {observe: 'response'})
+      .pipe(
+        catchError(this.appService.handleError<IStore[]>('getAllStores', []))
+      );
+  }
+
+  public setSelectedStore(store: IStore) {
     this._selectedStore = store;
     this.selectedStore.next(this._selectedStore);
   }

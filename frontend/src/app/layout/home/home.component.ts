@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {EStore, IStore} from "../../shared/constants/store.constants";
 import {StoreService} from "../../shared/services/store.service";
-import {take} from "rxjs";
+import {Observable, take} from "rxjs";
 import {Router} from "@angular/router";
 import {UtilsService} from "../../shared/services/utils.service";
 import {AppRoutingConstant} from "../../shared/classes/app-routing.constants";
@@ -16,11 +16,11 @@ export class HomeComponent implements OnInit {
 
   myStore!: IStore;
 
-  private _stores: IStore[] = [];
-  get stores(): IStore[] {
+  private _stores: Observable<IStore[]> = new Observable<IStore[]>();
+  get stores(): Observable<IStore[]> {
     return this._stores;
   }
-  set stores(stores: IStore[]) {
+  set stores(stores: Observable<IStore[]>) {
     this._stores = stores;
   }
 
@@ -32,16 +32,12 @@ export class HomeComponent implements OnInit {
   }
 
   private getStores(): void {
-    this._storeService.getAllStores().pipe(take(1)).subscribe((stores: IStore[]) => {
-      if (!UtilsService.isVoid(stores)) {
-        this.stores = stores;
-      }
-    });
+    this.stores = this._storeService.getAllStores().pipe(take(1));
   }
 
   navigateToStore(): void {
     this._storeService.setProducts(this.myStore[EStore.products]);
-    this._storeService.setStore(this.myStore);
+    this._storeService.setSelectedStore(this.myStore);
     console.log("navigating to store: " + this.myStore[EStore.name]);
     this._router.navigate([AppRoutingConstant.fullPath([ESections.products])]).then();
   }

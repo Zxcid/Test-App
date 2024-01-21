@@ -1,0 +1,87 @@
+<div [formGroup]="form">
+  <ng-container *ngIf="!item.hide">
+    <ng-container [ngSwitch]="item.type">
+
+      <mat-form-field>
+        <mat-label *ngIf="item.label">{{item.label}}</mat-label>
+
+        <!-- CASE SELECT -->
+        <ng-container *ngSwitchCase="EInputTypes.SELECT">
+          <mat-select [formControlName]="item.key"
+                      [multiple]="item.multiple"
+                      [placeholder]="item.placeholder || ''"
+                      [required]="isControlRequired(item.key)"
+                      (selectionChange)="emitInputValueChanged.emit(item.key)"
+                      [id]="'formGroup' + item.key">
+            <ng-container *ngFor="let option of item.options">
+              <!-- Options are a list of objects with key and label or a simple list-->
+              <mat-option
+                [value]="!!option.key ? option.key : option">{{!!option.label ? option.label : option | titlecase}}</mat-option>
+            </ng-container>
+          </mat-select>
+        </ng-container>
+
+        <!-- CASE AUTOCOMPLETE -->
+        <!-- autocomplete filter for mat autocomplete and make a shared component https://material.angular.io/components/autocomplete/overview -->
+        <ng-container *ngSwitchCase="EInputTypes.AUTOCOMPLETE">
+          <input type="text"
+                 matInput
+                 [required]="isControlRequired(item.key)"
+                 (ngModelChange)="emitInputValueChanged.emit(item.key)"
+                 [placeholder]="item.placeholder || ''"
+                 [id]="'formGroup' + item.key"
+                 [formControlName]="item.key"
+                 [matAutocomplete]="auto">
+          <!-- TODO check
+          <mat-hint class="h-ellipsis" matTooltip="{{item.hint}}" align="end">{{item.hint}}</mat-hint>
+          <mat-error *ngIf="hasInvalid(item.key)">{{getInputError(item.key)}}</mat-error>
+          -->
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <ng-container *ngFor="let option of item.options">
+              <mat-option [value]="option">{{option}}</mat-option><!--value="1"-->
+            </ng-container>
+          </mat-autocomplete>
+        </ng-container>
+
+        <!-- CASE NUMBER -->
+        <ng-container *ngSwitchCase="EInputTypes.NUMBER">
+          <input [formControlName]="item.key"
+                 [placeholder]="item.placeholder || ''"
+                 [id]="'formGroup' + item.key"
+                 type="number"
+                 [required]="isControlRequired(item.key)"
+                 [attr.min]="item.min" [attr.max]="item.max"
+                 (ngModelChange)="emitInputValueChanged.emit(item.key)"
+                 matInput>
+        </ng-container>
+
+        <!-- CASE TEXTAREA -->
+        <ng-container *ngSwitchCase="EInputTypes.TEXTAREA">
+        <textarea [formControlName]="item.key"
+                  (ngModelChange)="emitInputValueChanged.emit(item.key)"
+                  [placeholder]="item.placeholder || ''"
+                  [id]="'formGroup' + item.key"
+                  [required]="isControlRequired(item.key)"
+                  style="min-height: 90px;height: auto"
+                  matInput>
+        </textarea>
+        </ng-container>
+
+        <!-- DEFAULT CASE SIMPLE INPUT -->
+        <ng-container *ngSwitchDefault>
+          <input [formControlName]="item.key" [placeholder]="item.placeholder || ''" [id]="'formGroup' + item.key"
+                 [required]="isControlRequired(item.key)"
+                 (ngModelChange)="emitInputValueChanged.emit(item.key)"
+                 matInput>
+        </ng-container>
+
+        <span *ngIf="item.hasPrefix" matPrefix [innerHTML]="item.prefix"></span>
+        <span *ngIf="item.hasSuffix" matSuffix [innerHTML]="item.suffix"></span>
+
+      </mat-form-field>
+
+      <mat-error *ngIf="hasInvalid(item.key)">{{getInputError(item.key)}}</mat-error>
+
+    </ng-container>
+  </ng-container>
+</div>

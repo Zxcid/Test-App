@@ -20,16 +20,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   appName: string = environment.appName;
 
-  private $destroy: Subject<boolean> = new Subject<boolean>();
-
-  constructor(private _storeService: StoreService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy() {
-    this.$destroy.next(true);
-    this.$destroy.complete();
   }
 
 }

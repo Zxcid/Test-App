@@ -9,11 +9,11 @@ export enum EProduct {
 }
 
 export interface IProduct {
-  [EProduct.id]: number,
+  [EProduct.id]?: number,
   [EProduct.price]: number,
   [EProduct.title]: string,
-  [EProduct.category]: string,
-  [EProduct.description]: string,
-  [EProduct.employee]: string,
-  [EProduct.reviews]: string[]
+  [EProduct.category]?: string,
+  [EProduct.description]?: string,
+  [EProduct.employee]?: string,
+  [EProduct.reviews]?: string[]
 }

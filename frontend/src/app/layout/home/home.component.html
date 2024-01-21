@@ -7,8 +7,8 @@
   <mat-form-field appearance="fill">
     <mat-label>select your store...</mat-label>
     <mat-select [(value)]="myStore">
-      <mat-option *ngFor="let store of stores" [value]="store">
-        {{store.name}}
+      <mat-option *ngFor="let store of stores | async" [value]="store">
+        {{store.name | titlecase}}
       </mat-option>
     </mat-select>
   </mat-form-field>

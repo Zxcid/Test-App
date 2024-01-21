@@ -6,6 +6,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 export const MATERIAL_MODULES = [
   MatSelectModule,
@@ -14,7 +16,9 @@ export const MATERIAL_MODULES = [
   MatToolbarModule,
   MatIconModule,
   MatCardModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatDialogModule,
+  MatAutocompleteModule
 ];
 
 @NgModule({

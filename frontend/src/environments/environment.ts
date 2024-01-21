@@ -7,7 +7,8 @@ export const environment = {
   production: false,
   api: {
     allStores: 'http://localhost:8080/stores',
-    store: 'http://localhost:8080/stores/{id}'
+    store: 'http://localhost:8080/stores/{id}',
+    saveProduct: 'http://localhost:8080/products/save'
   }
 };
 
