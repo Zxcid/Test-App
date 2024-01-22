@@ -9,6 +9,6 @@ export interface IStore {
 }
 
 export const _defaultStore: IStore = {
-  [EStore.name]: 'Ge-Store',
+  [EStore.name]: '',
   [EStore.storeId]: 999
 }

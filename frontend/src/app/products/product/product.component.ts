@@ -18,7 +18,7 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(product: IProduct): void {
-    console.log("Deleting product: " + this.product.title);
+    console.log("Deleting product: " + this.product.title + " with id: " + this.product.productId);
     this.deletedProduct.emit(product);
   }
 

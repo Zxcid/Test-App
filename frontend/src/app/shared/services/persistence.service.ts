@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IProduct} from "../constants/product.constants";
-import {IStore} from "../constants/store.constants";
+import {_defaultStore, IStore} from "../constants/store.constants";
 import {BehaviorSubject} from "rxjs";
 
 /**
@@ -12,7 +12,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class PersistenceService {
   private _products: IProduct[] = [];
-  private _selectedStore: IStore = {name: '', storeId: 0};
+  private _selectedStore: IStore = _defaultStore;
 
   public selectedStore: BehaviorSubject<IStore> = new BehaviorSubject<IStore>(this._selectedStore);
   public products: BehaviorSubject<IProduct[]> = new BehaviorSubject<IProduct[]>([]);
@@ -21,6 +21,11 @@ export class PersistenceService {
 
   public setSelectedStore(store: IStore) {
     this._selectedStore = store;
+    this.selectedStore.next(this._selectedStore);
+  }
+
+  public clearStore() {
+    this._selectedStore = _defaultStore;
     this.selectedStore.next(this._selectedStore);
   }
 
@@ -41,6 +46,11 @@ export class PersistenceService {
 
   public addProduct(product: IProduct) {
     this._products.push(product);
+    this.products.next(this._products);
+  }
+
+  public clearProducts() {
+    this._products = [];
     this.products.next(this._products);
   }
 }

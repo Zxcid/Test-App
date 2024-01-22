@@ -31,7 +31,6 @@ export class NewProductComponent implements OnInit {
 
   onSubmit(): void {
     const formValue: IProduct = this.productForm.getRawValue();
-    console.log(formValue);
     FormUtilsService.validateAllFormFields(this.productForm);
     if (this.productForm.valid) {
       this.dialogRef.close(formValue);

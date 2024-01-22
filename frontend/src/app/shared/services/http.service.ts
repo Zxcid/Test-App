@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable} from "rxjs";
-import {EStore, IStore} from "../constants/store.constants";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {IStore} from "../constants/store.constants";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {AppService} from "./app.service";
 import {IProduct} from "../constants/product.constants";
-import {PersistenceService} from "./persistence.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +12,7 @@ import {PersistenceService} from "./persistence.service";
 export class HttpService {
 
   constructor(private http: HttpClient,
-              private appService: AppService,
-              private persistenceService: PersistenceService) { }
+              private appService: AppService) { }
 
   public getAllStores(): Observable<IStore[]> {
     return this.http.get<IStore[]>(environment.api.allStores)
@@ -24,30 +22,34 @@ export class HttpService {
   }
 
   public getAllProductsForCurrentStore(storeId: number): Observable<IProduct[]> {
-    let params: HttpParams = new HttpParams();
-    params.set('storeId', storeId);
+    let params: HttpParams = new HttpParams().append('storeId', storeId);
 
-    return this.http.get<IProduct[]>(environment.api.allProducts, {params: params})
+    return this.http.get<IProduct[]>(environment.api.allProducts, {params, observe: 'body'})
       .pipe(
         catchError(this.appService.handleError<IProduct[]>('getAllProductsForCurrentStore', []))
       );
   }
 
-  public postProduct(product: IProduct) {
-    let params: HttpParams = new HttpParams();
-    params.set('storeId', this.persistenceService.selectedStore.value[EStore.storeId]);
+  public postProduct(product: IProduct, storeId: number): Observable<IProduct> {
+    let params: HttpParams = new HttpParams().append('storeId', storeId);
 
-    return this.http.post(environment.api.saveProduct, product, {observe: 'response', params: params})
+    return this.http.post<IProduct>(environment.api.saveProduct, product, {params, observe: 'body'})
       .pipe(
-        catchError(this.appService.handleError<IStore[]>('postProduct', []))
+        catchError(this.appService.handleError<IProduct>('postProduct'))
       );
   }
 
-  // TODO refactor del productId
-  public deleteProduct(product: IProduct) {
-    return this.http.delete(environment.api.deleteProduct, {observe: 'response', body: product})
+  /**
+   * Esempio di observe: 'response' con switch sul codice di risposta.
+   *
+   * @param productId
+   */
+  public deleteProduct(productId: number): Observable<HttpResponse<any>> {
+    let params: HttpParams = new HttpParams().append('productId', productId);
+
+    return this.http.delete<HttpResponse<any>>(environment.api.deleteProduct, {observe: 'response', params})
       .pipe(
-        catchError(this.appService.handleError<IStore[]>('deleteProduct', []))
+        catchError(this.appService.handleError<any>('deleteProduct', []))
       );
   }
 }
