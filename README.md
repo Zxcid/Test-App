@@ -1,6 +1,8 @@
 # Test-App
 Containerized app with db-be-fe used for testing purposes and showcasing.
 <br>
+#### The application is currently developed for mobile devices only, it is recommended to navigate it using the responsive view in the developer tools of the browser.
+<br>
 Implemented technologies:
 <ul>
 <li>DB <strong>PostgreSQL</strong></li>
