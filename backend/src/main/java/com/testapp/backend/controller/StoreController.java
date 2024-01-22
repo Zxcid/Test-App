@@ -1,7 +1,6 @@
 package com.testapp.backend.controller;
 
-import com.testapp.backend.db.model.StoreEntity;
-import com.testapp.backend.db.repository.StoreRepository;
+import com.testapp.backend.db.model.StoresEntity;
 import com.testapp.backend.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,8 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +26,7 @@ public class StoreController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the store",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = StoreEntity.class)) }),
+                            schema = @Schema(implementation = StoresEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Store not found",

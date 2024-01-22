@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IStore} from "../shared/constants/store.constants";
-import {StoreService} from "../shared/services/store.service";
+import {HttpService} from "../shared/services/http.service";
 import {Subject, takeUntil} from "rxjs";
 import {UtilsService} from "../shared/services/utils.service";
+import {PersistenceService} from "../shared/services/persistence.service";
 
 @Component({
   selector: 'app-layout',
@@ -11,23 +12,12 @@ import {UtilsService} from "../shared/services/utils.service";
 })
 export class LayoutComponent implements OnInit, OnDestroy {
 
-  storeSelected!: IStore;
-
-  private $destroy: Subject<boolean> = new Subject<boolean>();
-
-  constructor(private _storeService: StoreService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this._storeService.selectedStore.pipe(takeUntil(this.$destroy)).subscribe(s => {
-      if (!UtilsService.isVoid(s)) {
-        this.storeSelected = s;
-      }
-    })
   }
 
   ngOnDestroy() {
-    this.$destroy.next(true);
-    this.$destroy.complete();
   }
 
 }

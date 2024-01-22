@@ -1,10 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IProduct} from "../shared/constants/product.constants";
-import {StoreService} from "../shared/services/store.service";
-import {Subject, take, takeUntil} from "rxjs";
+import {HttpService} from "../shared/services/http.service";
+import {Subject, take} from "rxjs";
 import {UtilsService} from "../shared/services/utils.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {NewProductComponent} from "./new-product/new-product.component";
+import {PersistenceService} from "../shared/services/persistence.service";
+import {EStore} from "../shared/constants/store.constants";
 
 @Component({
   selector: 'app-products',
@@ -15,20 +17,32 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   products: IProduct[] = [];
   isFilterOpen: boolean = false;
+  storeId?: number;
 
   private $destroy: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private _storeService: StoreService,
+  constructor(private _httpService: HttpService,
+              private persistenceService: PersistenceService,
               public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this._storeService.products.pipe(takeUntil(this.$destroy)).subscribe(p => {
-      if (!UtilsService.isVoid(p)) {
-        console.log(p);
-        this.products = p;
-      }
+    this.getProducts();
+  }
+
+  getProducts(): void {
+    this.persistenceService.selectedStore.pipe(take(1)).subscribe(s => {
+      this.storeId = s[EStore.storeId];
     });
+
+    if (this.storeId != null) {
+      this._httpService.getAllProductsForCurrentStore(this.storeId).pipe(take(1)).subscribe(p => {
+        if (!UtilsService.isVoid(p)) {
+          this.persistenceService.setProducts(p);
+          this.products.push(...p);
+        }
+      });
+    }
   }
 
   addNewProduct(): void {
@@ -42,16 +56,18 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!UtilsService.isVoid(result)) {
-        this._storeService.addProduct(result);
+        this.persistenceService.addProduct(result);
         this.storeProduct(result);
       }
     });
   }
 
   storeProduct(product: IProduct): void {
-    this._storeService.postProduct(product).pipe(take(1)).subscribe(p => {
+    this._httpService.postProduct(product).pipe(take(1)).subscribe(p => {
       if (!UtilsService.isVoid(p)){
         // TODO snackbar? 'Product saved'
+        this.products.push(product);
+
       } else {
         // TODO snackbar? 'Error'
       }
@@ -59,12 +75,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   deleteProduct(product: IProduct): void {
-    this._storeService.removeProduct(product);
+    this.persistenceService.removeProduct(product);
   }
 
   toggleFilterMenu(): void {
     this.isFilterOpen = !this.isFilterOpen;
-    console.log('this.isFilterOpen: ' + this.isFilterOpen);
   }
 
   ngOnDestroy(): void {

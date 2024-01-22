@@ -1,5 +1,6 @@
 export enum EProduct {
   'id' = 'id',
+  'storeId' = 'storeId',
   'price' = 'price',
   'title' = 'title',
   'category' = 'category',
@@ -10,6 +11,7 @@ export enum EProduct {
 
 export interface IProduct {
   [EProduct.id]?: number,
+  [EProduct.storeId]: number,
   [EProduct.price]: number,
   [EProduct.title]: string,
   [EProduct.category]?: string,

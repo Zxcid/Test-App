@@ -1,8 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {StoreService} from "../../shared/services/store.service";
-import {Subject} from "rxjs";
 import {IStore} from "../../shared/constants/store.constants";
 import {environment} from "../../../environments/environment";
+import {PersistenceService} from "../../shared/services/persistence.service";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -20,12 +20,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   appName: string = environment.appName;
 
-  constructor() { }
+  private $destroy: Subject<boolean> = new Subject<boolean>();
 
+  constructor(private _persistenceService: PersistenceService) { }
+
+  /**
+   * la subscription è per una futura implementazione del cambio di store da menu utente.
+   */
   ngOnInit(): void {
+    this._persistenceService.selectedStore.pipe(takeUntil(this.$destroy)).subscribe(s => {
+      this.store = s;
+    });
   }
 
   ngOnDestroy() {
+    this.$destroy.next(true);
+    this.$destroy.complete();
   }
 
 }

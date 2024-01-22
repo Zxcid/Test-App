@@ -1,7 +1,7 @@
 package com.testapp.backend.service;
 
 import com.testapp.backend.config.StoreNotFoundException;
-import com.testapp.backend.db.model.StoreEntity;
+import com.testapp.backend.db.model.StoresEntity;
 import com.testapp.backend.db.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +22,13 @@ public class StoreService {
         this.storeRepository = storeRepository;
     }
 
-    public StoreEntity getStoreById(Integer storeId) throws StoreNotFoundException {
+    public StoresEntity getStoreById(Integer storeId) throws StoreNotFoundException {
         return storeRepository.findStoreEntityByStoreId(storeId)
                 .orElseThrow(() -> new StoreNotFoundException(generateErrorMessage(storeId)));
     }
 
     public ResponseEntity<?> getAllStores() {
-        List<StoreEntity> stores = storeRepository.getAllStores();
+        List<StoresEntity> stores = storeRepository.getAllStores();
         if (!stores.isEmpty())
             return ResponseEntity.ok().body(stores);
         else

@@ -1,6 +1,6 @@
 package com.testapp.backend.service;
 
-import com.testapp.backend.db.model.ProductEntity;
+import com.testapp.backend.db.model.ProductsEntity;
 import com.testapp.backend.db.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public ProductEntity saveProduct(ProductEntity product) {
+    public ProductsEntity saveProduct(ProductsEntity product) {
         try {
             return productRepository.save(product);
         } catch (Exception e) {
@@ -37,11 +38,11 @@ public class ProductService {
         }
     }
 
-    public ResponseEntity<?> getByProductId(Integer id) {
-        Optional<ProductEntity> product = productRepository.getByProductId(id);
-        if (product.isPresent())
-            return ResponseEntity.ok().body(product.get());
-        else
-            return new ResponseEntity<>( "No product found for the given id: " + id, HttpStatus.NOT_FOUND);
+    public List<ProductsEntity> getAllByStoreId(Integer storeId) {
+        try {
+            return productRepository.getAllByStoreId(storeId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

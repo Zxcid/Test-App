@@ -1,19 +1,14 @@
-import {IProduct} from "./product.constants";
-
 export enum EStore {
   'name' = 'name',
-  'id' = 'id',
-  'products' = 'products'
+  'storeId' = 'storeId'
 }
 
 export interface IStore {
   [EStore.name]: string,
-  [EStore.id]: number,
-  [EStore.products]: IProduct[]
+  [EStore.storeId]: number
 }
 
 export const _defaultStore: IStore = {
   [EStore.name]: 'Ge-Store',
-  [EStore.id]: 999,
-  [EStore.products]: []
+  [EStore.storeId]: 999
 }

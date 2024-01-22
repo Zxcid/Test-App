@@ -8,7 +8,9 @@ export const environment = {
   api: {
     allStores: 'http://localhost:8080/stores',
     store: 'http://localhost:8080/stores/{id}',
-    saveProduct: 'http://localhost:8080/products/save'
+    saveProduct: 'http://localhost:8080/products/save',
+    allProducts: 'http://localhost:8080/products/all',
+    deleteProduct: 'http://localhost:8080/products/delete'
   }
 };
 

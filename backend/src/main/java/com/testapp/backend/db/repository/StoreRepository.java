@@ -1,6 +1,6 @@
 package com.testapp.backend.db.repository;
 
-import com.testapp.backend.db.model.StoreEntity;
+import com.testapp.backend.db.model.StoresEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StoreRepository extends JpaRepository<StoreEntity, Integer> {
+public interface StoreRepository extends JpaRepository<StoresEntity, Integer> {
 
-    Optional<StoreEntity> findStoreEntityByStoreId(Integer storeId);
+    Optional<StoresEntity> findStoreEntityByStoreId(Integer storeId);
 
     @Query(nativeQuery = true, value = "SELECT * FROM public.stores")
-    List<StoreEntity> getAllStores();
+    List<StoresEntity> getAllStores();
 }

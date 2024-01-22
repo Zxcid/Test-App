@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EStore, IStore} from "../../shared/constants/store.constants";
-import {StoreService} from "../../shared/services/store.service";
+import {HttpService} from "../../shared/services/http.service";
 import {Observable, take} from "rxjs";
 import {Router} from "@angular/router";
-import {UtilsService} from "../../shared/services/utils.service";
 import {AppRoutingConstant} from "../../shared/classes/app-routing.constants";
 import {ESections} from "../../shared/constants/routing.constants";
+import {PersistenceService} from "../../shared/services/persistence.service";
 
 @Component({
   selector: 'app-home',
@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit {
     this._stores = stores;
   }
 
-  constructor(private _storeService: StoreService,
+  constructor(private httpService: HttpService,
+              private _persistenceService: PersistenceService,
               private _router: Router) { }
 
   ngOnInit(): void {
@@ -32,13 +33,12 @@ export class HomeComponent implements OnInit {
   }
 
   private getStores(): void {
-    this.stores = this._storeService.getAllStores().pipe(take(1));
+    this.stores = this.httpService.getAllStores().pipe(take(1));
   }
 
   navigateToStore(): void {
-    this._storeService.setProducts(this.myStore[EStore.products]);
-    this._storeService.setSelectedStore(this.myStore);
-    console.log("navigating to store: " + this.myStore[EStore.name]);
+    this._persistenceService.setSelectedStore(this.myStore);
+    console.log("navigating to store: " + this.myStore[EStore.name] + " with id: " + this.myStore[EStore.storeId]);
     this._router.navigate([AppRoutingConstant.fullPath([ESections.products])]).then();
   }
 

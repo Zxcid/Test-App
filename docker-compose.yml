@@ -23,6 +23,8 @@ services:
     image: backend
     ports:
       - "8080:8080"
+    volumes:
+      - ./backend/:/workspace/
     environment:
       - DB_SERVER=db
       - POSTGRES_DB=postgres
